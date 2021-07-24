@@ -30,8 +30,6 @@ public class User implements Serializable {
     private String equipe;
     @Lob
     private byte[] photo;
-    @OneToMany(mappedBy = "user")
-    private List<SoftSkills> softSkills ;
     @OneToMany(mappedBy ="user")
     private List<TechSkills> techSkills ;
 
@@ -67,9 +65,6 @@ public class User implements Serializable {
         this.photo = photo;
     }
 
-    public void setSoftSkills(List<SoftSkills> softSkills) {
-        this.softSkills = softSkills;
-    }
 
     public void setTechSkills(List<TechSkills> techSkills) {
         this.techSkills = techSkills;
@@ -107,10 +102,7 @@ public class User implements Serializable {
         return photo;
     }
 
-    public List<SoftSkills> getSoftSkills() {
-        return softSkills;
-    }
-
+    
     public List<TechSkills> getTechSkills() {
         return techSkills;
     }
