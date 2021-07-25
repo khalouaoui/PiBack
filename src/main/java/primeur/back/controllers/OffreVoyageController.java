@@ -2,6 +2,8 @@ package primeur.back.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,10 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import primeur.back.entities.OffreVoyage;
 import primeur.back.repositories.IOffreVoyage;
+import primeur.back.repositories.IUser;
+import primeur.back.repositories.MailService;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -22,6 +27,10 @@ public class OffreVoyageController {
 
 	@Autowired
 	private IOffreVoyage offreRepository;
+	@Autowired
+	private MailService mailService;
+	@Autowired
+	private IUser userRepository;
 
 	@GetMapping("/")
 	public ResponseEntity findAll() {
@@ -87,5 +96,21 @@ public class OffreVoyageController {
 		}
 		offreRepository.delete(OffreVoyage);
 		return ResponseEntity.ok().build();
+	}
+
+	@PostMapping("/invi")
+	public ResponseEntity createUser(@RequestParam String email) {
+		if (StringUtils.isEmpty(email)) {
+			return ResponseEntity.badRequest().build();
+		}
+
+		// sending mail to the user
+		try {
+			mailService.sendEmail(email);
+		} catch (MailException mailException) {
+
+		}
+		return ResponseEntity.ok().build();
+
 	}
 }
