@@ -75,12 +75,13 @@ public class OffreVoyageController {
 		if (newOffreVoyage.getLieuDepart() != null) {
 			OffreVoyage.setLieuDepart(newOffreVoyage.getLieuDepart());
 		}
-		if (newOffreVoyage.getLieuDepart() != null) {
-			OffreVoyage.setLieuArrivee(newOffreVoyage.getLieuDepart());
+		if (newOffreVoyage.getLieuArrivee() != null) {
+			OffreVoyage.setLieuArrivee(newOffreVoyage.getLieuArrivee());
 		}
 		if (newOffreVoyage.getNbPlaces() != null) {
 			OffreVoyage.setNbPlaces((newOffreVoyage.getNbPlaces()));
 		}
+		OffreVoyage.setDisponibiliteOffre(newOffreVoyage.isDisponibiliteOffre());
 
 		return ResponseEntity.ok(offreRepository.save(OffreVoyage));
 	}
